@@ -1,5 +1,5 @@
 import db from '../models/index';
-
+/* [GET /] */
 let getHomePage = async (req, res) => {
     try {
         let data = await db.User.findAll();
@@ -12,5 +12,5 @@ let getHomePage = async (req, res) => {
 }
 
 module.exports = {
-    getHomePage: getHomePage
+    getHomePage: getHomePage,
 }
