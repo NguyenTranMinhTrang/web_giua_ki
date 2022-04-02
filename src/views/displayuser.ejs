@@ -23,6 +23,24 @@
         tr:nth-child(even) {
             background-color: #dddddd;
         }
+
+        .button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 15px 24px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin-left: 16px;
+            border-radius: 12px;
+            cursor: pointer;
+        }
+
+        .btn-delete {
+            background-color: #f44336;
+        }
     </style>
 </head>
 
@@ -34,6 +52,7 @@
                 <th>Id</th>
                 <th>Username</th>
                 <th>Email</th>
+                <th>Action</th>
             </tr>
 
             <% for(let i=0; i < userData.length; i++) {%>
@@ -46,6 +65,10 @@
                     </td>
                     <td>
                         <%= userData[i].email%>
+                    </td>
+                    <td>
+                        <a href="/edit-crud?id=<%= userData[i].id %>" class="button btn-edit" type="button">Edit</a>
+                        <a class="button btn-delete" type="button">Remove</a>
                     </td>
                 </tr>
                 <%} %>
