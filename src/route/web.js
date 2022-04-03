@@ -5,6 +5,7 @@ import userController from "../controllers/userController";
 let router = express.Router();
 
 let initWebRoutes = (app) => {
+    router.get("/delete-crud", userController.deleteUser);
     router.post("/put-user", userController.putUser);
     router.get("/edit-crud", userController.getEditPage);
     router.get("/get-user", userController.getUser);

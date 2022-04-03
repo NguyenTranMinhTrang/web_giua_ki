@@ -47,10 +47,21 @@ let putUser = async (req, res) => {
     });
 }
 
+/* [POST /delete-crud]  get delete user page*/
+let deleteUser = async (req, res) => {
+    let id = req.query.id;
+    if (id) {
+        await CRUDservices.deleteUserById(id);
+        return res.send("Delete User Success");
+    }
+    return res.send("User not found!");
+}
+
 module.exports = {
     getPost: getPost,
     postUser: postUser,
     getUser: getUser,
     getEditPage: getEditPage,
-    putUser: putUser
+    putUser: putUser,
+    deleteUser: deleteUser,
 }
