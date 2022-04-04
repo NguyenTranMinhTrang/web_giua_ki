@@ -1,5 +1,6 @@
 import db from '../models/index';
 import CRUDservices from "../services/CRUDservices";
+import userServices from "../services/userServices";
 
 /* [GET /getPost] form post user */
 let getPost = (req, res) => {
@@ -57,6 +58,47 @@ let deleteUser = async (req, res) => {
     return res.send("User not found!");
 }
 
+/* [POST /api/login]  login user */
+let login = async (req, res) => {
+    let { email, password } = req.body;
+
+    if (!email || !password) {
+        return res.status(500).json({
+            errorCode: 0,
+            message: "Missing inputs paramaters!"
+        })
+    }
+
+    let userData = await userServices.handleUserLogin(email, password);
+
+    return res.status(200).json({
+        errorCode: userData.errorCode,
+        message: userData.errMessage,
+        userData: userData.user ? userData.user : {}
+    });
+}
+
+let getUsers = async (req, res) => {
+
+    let id = req.body.id;
+    let users = await userServices.getAllUser(id);
+    if (users) {
+        return res.status(200).json({
+            errorCode: 1,
+            message: "OK",
+            users
+        })
+    }
+    else {
+        return res.status(500).json({
+            errorCode: 0,
+            message: "User's not found!",
+            users
+        })
+    }
+
+}
+
 module.exports = {
     getPost: getPost,
     postUser: postUser,
@@ -64,4 +106,6 @@ module.exports = {
     getEditPage: getEditPage,
     putUser: putUser,
     deleteUser: deleteUser,
+    login: login,
+    getUsers: getUsers
 }
