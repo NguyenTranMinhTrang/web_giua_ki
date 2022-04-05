@@ -6,12 +6,13 @@ let router = express.Router();
 
 let initWebRoutes = (app) => {
 
+    router.delete("/api/deleteUser", userController.deleteUser);
     router.put("/api/editUser", userController.editUser);
     router.post("/api/createUser", userController.createUser);
     router.get("/api/getUsers", userController.getUsers);
     router.post("/api/login", userController.login);
 
-    router.get("/delete-crud", userController.deleteUser);
+    router.get("/delete-crud", userController.removeUser);
     router.post("/put-user", userController.putUser);
     router.get("/edit-crud", userController.getEditPage);
     router.get("/get-user", userController.getUser);

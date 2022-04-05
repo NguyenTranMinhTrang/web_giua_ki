@@ -145,6 +145,8 @@ let deleteUser = async (id) => {
                 where: { id: id }
             })
 
+            console.log(user);
+
             if (!user) {
                 resolve({
                     errorCode: 0,
@@ -152,10 +154,56 @@ let deleteUser = async (id) => {
                 })
             }
 
-            resolve({
-                errorCode: 0,
-                message: "OK"
+            await db.User.destroy({
+                where: {
+                    id: id
+                }
             })
+            resolve({
+                errorCode: 1,
+                message: "User is deleted"
+            })
+
+        } catch (error) {
+            reject(error);
+        }
+    })
+}
+
+let updateUserData = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+
+            if (!data.id) {
+                resolve({
+                    errorCode: 0,
+                    message: "Missing required parameters"
+                })
+            }
+
+            let user = await db.User.findOne({
+                where: { id: data.id }
+            })
+
+            if (!user) {
+                resolve({
+                    errorCode: 0,
+                    message: "User not found!"
+                })
+            }
+
+            await db.User.update({
+                username: data.username
+            }, {
+                where: { id: data.id }
+            })
+
+
+            resolve({
+                errorCode: 1,
+                message: "User is updated!"
+            });
+
         } catch (error) {
             reject(error);
         }
@@ -168,5 +216,6 @@ module.exports = {
     getAllUser: getAllUser,
     postNewUser: postNewUser,
     editUser: editUser,
-    deleteUser: deleteUser
+    deleteUser: deleteUser,
+    updateUserData: updateUserData
 }

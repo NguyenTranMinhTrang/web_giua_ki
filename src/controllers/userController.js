@@ -49,7 +49,7 @@ let putUser = async (req, res) => {
 }
 
 /* [POST /delete-crud]  get delete user page*/
-let deleteUser = async (req, res) => {
+let removeUser = async (req, res) => {
     let id = req.query.id;
     if (id) {
         await CRUDservices.deleteUserById(id);
@@ -120,17 +120,30 @@ let createUser = async (req, res) => {
 
 /* [PUT /api/editUser]  edit user data */
 let editUser = async (req, res) => {
-    let id = req.body;
-    if (id) {
-        return res.status(200).json({
-            errorCode: 1,
-            message: "OK"
-        });
+    let data = req.body;
+    if (data) {
+        let message = await userServices.updateUserData(data);
+        return res.status(200).json(message);
     }
     else {
         return res.status(500).json({
             errorCode: 0,
-            message: "User's not found!"
+            message: "Missing required parameters!"
+        })
+    }
+}
+
+/* [DELETE /api/deleteUser]  delete user data */
+let deleteUser = async (req, res) => {
+    let id = req.query.id;
+    if (id) {
+        let message = await userServices.deleteUser(id);
+        return res.status(200).json(message);
+    }
+    else {
+        return res.status(500).json({
+            errorCode: 0,
+            message: "Missing required parameters!"
         })
     }
 }
@@ -141,9 +154,10 @@ module.exports = {
     getUser: getUser,
     getEditPage: getEditPage,
     putUser: putUser,
-    deleteUser: deleteUser,
+    removeUser: removeUser,
     login: login,
     getUsers: getUsers,
     createUser: createUser,
-    editUser: editUser
+    editUser: editUser,
+    deleteUser: deleteUser
 }
