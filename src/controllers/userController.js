@@ -78,9 +78,10 @@ let login = async (req, res) => {
     });
 }
 
+/* [GET /api/getUsers]  get user data */
 let getUsers = async (req, res) => {
 
-    let id = req.body.id;
+    let id = req.query.id;
     let users = await userServices.getAllUser(id);
     if (users) {
         return res.status(200).json({
@@ -99,6 +100,41 @@ let getUsers = async (req, res) => {
 
 }
 
+/* [POST /api/createUser]  create new user data */
+let createUser = async (req, res) => {
+    let user = req.body;
+    if (user) {
+        let postUser = await userServices.postNewUser(user);
+        return res.status(200).json(postUser);
+    }
+
+    else {
+        return res.status(500).json({
+            errorCode: 0,
+            message: "Create user failed!"
+        })
+    }
+
+}
+
+
+/* [PUT /api/editUser]  edit user data */
+let editUser = async (req, res) => {
+    let id = req.body;
+    if (id) {
+        return res.status(200).json({
+            errorCode: 1,
+            message: "OK"
+        });
+    }
+    else {
+        return res.status(500).json({
+            errorCode: 0,
+            message: "User's not found!"
+        })
+    }
+}
+
 module.exports = {
     getPost: getPost,
     postUser: postUser,
@@ -107,5 +143,7 @@ module.exports = {
     putUser: putUser,
     deleteUser: deleteUser,
     login: login,
-    getUsers: getUsers
+    getUsers: getUsers,
+    createUser: createUser,
+    editUser: editUser
 }

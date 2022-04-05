@@ -1,5 +1,7 @@
 import db from "../models/index";
 import bcrypt from "bcrypt";
+const saltRounds = 10;
+const salt = bcrypt.genSaltSync(saltRounds);
 
 
 let handleUserLogin = (email, password) => {
@@ -87,8 +89,84 @@ let getAllUser = (id) => {
     })
 }
 
+let postNewUser = (user) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let checkEmail = await checkUserEmail(user.email);
+            if (checkEmail) {
+                resolve({
+                    errorCode: 0,
+                    message: "Your email is already exist!"
+                })
+            }
+
+            let hashPasswordFromBcrypt = await hashPassword(user.password);
+            await db.User.create({
+                username: user.username,
+                email: user.email,
+                password: hashPasswordFromBcrypt,
+            })
+
+            resolve({
+                errorCode: 1,
+                message: "OK"
+            });
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+let hashPassword = (password) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const hash = await bcrypt.hashSync(password, salt);
+            resolve(hash);
+        } catch (error) {
+            reject(error);
+        }
+    })
+}
+
+let editUser = async (user) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+
+        } catch (error) {
+            reject(error);
+        }
+    })
+}
+
+let deleteUser = async (id) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let user = await db.User.findOne({
+                where: { id: id }
+            })
+
+            if (!user) {
+                resolve({
+                    errorCode: 0,
+                    message: "User not found!"
+                })
+            }
+
+            resolve({
+                errorCode: 0,
+                message: "OK"
+            })
+        } catch (error) {
+            reject(error);
+        }
+    })
+}
+
 module.exports = {
     handleUserLogin: handleUserLogin,
     checkUserEmail: checkUserEmail,
-    getAllUser: getAllUser
+    getAllUser: getAllUser,
+    postNewUser: postNewUser,
+    editUser: editUser,
+    deleteUser: deleteUser
 }

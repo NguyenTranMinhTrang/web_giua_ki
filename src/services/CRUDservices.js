@@ -16,7 +16,7 @@ let createNewUser = async (user) => {
 
             resolve('Create successfully a new user!');
         } catch (error) {
-
+            reject(error)
         }
     })
 }
