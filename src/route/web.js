@@ -1,11 +1,14 @@
 import express from "express";
 import homeController from "../controllers/homeController";
 import userController from "../controllers/userController";
+import todoController from "../controllers/todoController";
 
 let router = express.Router();
 
 let initWebRoutes = (app) => {
 
+    router.get("/api/getTodos", todoController.getAllTodo)
+    router.post("/api/login", userController.login);
     router.delete("/api/deleteUser", userController.deleteUser);
     router.put("/api/editUser", userController.editUser);
     router.post("/api/createUser", userController.createUser);

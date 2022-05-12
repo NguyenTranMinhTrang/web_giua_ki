@@ -23,7 +23,7 @@ let handleUserLogin = (email, password) => {
                     }
                     else {
                         userData.errorCode = 1;
-                        userData.errMessage = "OK";
+                        userData.errMessage = "Login Success";
                         delete user.password;
                         userData.user = user;
                     }
@@ -99,18 +99,20 @@ let postNewUser = (user) => {
                     message: "Your email is already exist!"
                 })
             }
+            else {
+                let hashPasswordFromBcrypt = await hashPassword(user.password);
+                await db.User.create({
+                    username: user.username,
+                    email: user.email,
+                    password: hashPasswordFromBcrypt,
+                })
 
-            let hashPasswordFromBcrypt = await hashPassword(user.password);
-            await db.User.create({
-                username: user.username,
-                email: user.email,
-                password: hashPasswordFromBcrypt,
-            })
+                resolve({
+                    errorCode: 1,
+                    message: "Register success!"
+                });
+            }
 
-            resolve({
-                errorCode: 1,
-                message: "OK"
-            });
         } catch (error) {
             reject(error)
         }
