@@ -7,7 +7,10 @@ let router = express.Router();
 
 let initWebRoutes = (app) => {
 
-    router.get("/api/getTodos", todoController.getAllTodo)
+    router.delete("/api/deleteTodo", todoController.deleteTodo);
+    router.put("/api/editTodo", todoController.editTodo);
+    router.post("/api/addTodo", todoController.addTodo);
+    router.get("/api/getTodos", todoController.getAllTodo);
     router.post("/api/login", userController.login);
     router.delete("/api/deleteUser", userController.deleteUser);
     router.put("/api/editUser", userController.editUser);

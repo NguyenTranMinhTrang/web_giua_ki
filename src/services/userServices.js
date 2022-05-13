@@ -130,15 +130,6 @@ let hashPassword = (password) => {
     })
 }
 
-let editUser = async (user) => {
-    return new Promise(async (resolve, reject) => {
-        try {
-
-        } catch (error) {
-            reject(error);
-        }
-    })
-}
 
 let deleteUser = async (id) => {
     return new Promise(async (resolve, reject) => {
@@ -147,7 +138,6 @@ let deleteUser = async (id) => {
                 where: { id: id }
             })
 
-            console.log(user);
 
             if (!user) {
                 resolve({
@@ -217,7 +207,6 @@ module.exports = {
     checkUserEmail: checkUserEmail,
     getAllUser: getAllUser,
     postNewUser: postNewUser,
-    editUser: editUser,
     deleteUser: deleteUser,
     updateUserData: updateUserData
 }
