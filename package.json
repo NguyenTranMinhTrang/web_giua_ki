@@ -19,6 +19,7 @@
   "dependencies": {
     "@babel/core": "^7.12.10",
     "@babel/node": "^7.12.10",
+    "@babel/preset-env": "^7.12.10",
     "bcrypt": "^5.0.1",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
@@ -29,7 +30,6 @@
     "nodemon": "^2.0.16"
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.12.10",
     "sequelize": "^6.6.2",
     "sequelize-cli": "^6.2.0"
   }
