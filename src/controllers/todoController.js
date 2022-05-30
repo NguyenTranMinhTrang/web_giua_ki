@@ -65,7 +65,6 @@ const deleteTodo = async (req, res) => {
         return res.status(200).json({
             errorCode: response.errorCode,
             message: response.message,
-            todoList: response.todoList
         });
     }
     else {
