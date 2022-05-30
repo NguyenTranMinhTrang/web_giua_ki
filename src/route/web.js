@@ -17,6 +17,10 @@ let initWebRoutes = (app) => {
     router.get("/api/getUsers", userController.getUsers);
     router.post("/api/login", userController.login);
 
+    router.get("/", function (req, res, next) {
+        res.send('Hello World');
+    })
+
     return app.use('/', router);
 }
 
