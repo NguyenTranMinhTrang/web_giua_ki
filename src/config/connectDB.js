@@ -13,7 +13,11 @@ const sequelize = new Sequelize(process.env.DB_DATABASE, process.env.DB_USERNAME
                 require: true,
                 rejectUnauthorized: false
             }
-        }
+        },
+        query: {
+            "raw": true
+        },
+        timezone: "+07:00"
     });
 
 let connectDB = async () => {
